@@ -4,13 +4,18 @@ import (
     "fmt"
     "io/ioutil"
     "net/http"
+    "net/url"
 )
 
 func main() {
-    url := "http://127.0.0.1:8080/banking"
-    fmt.Println("URL:>", url)
+    lUrl := "http://127.0.0.1:8080/banking/atm/v1"
+    fmt.Println("URL:>", lUrl)
 
-    resp, err := http.Get(url)
+    // resp, err := http.Get(lUrl)
+    resp, err := http.PostForm(lUrl, url.Values{
+        "ln": {"12"},
+        "ip": {"4252"},
+        "ua": {"342"}})
 	if err != nil {
 		panic(err)
 	}

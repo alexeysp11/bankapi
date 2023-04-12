@@ -1,0 +1,5 @@
+{
+    "Atm": ["v1", "v2"],
+    "Eftpos": ["v1", "v2"],
+    "BankCoreAddress": "http://127.0.0.1:8080/banking?ip=4252&ln=12&ua=342"
+}
