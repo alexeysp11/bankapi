@@ -17,12 +17,14 @@ type BankApiServer struct {
 func (s *BankApiServer) MyHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("request Headers:", req.Header)
     body, _ := ioutil.ReadAll(req.Body)
+    // fmt.Println("request URL:", string(req.URL.Path))
     fmt.Println("request Body:", string(body))
-	fmt.Println("request param:", req.FormValue("id"))
+	// fmt.Println("request param:", req.FormValue("id"))
 
 	// parse request 
 
 	// send request to the core 
+	sendToCoreServer(req.URL.Path, string(body))
 	fmt.Println("BankCoreAddress:", s.config.BankCoreAddress)
 	result := "Hello, world!\n" 
 
@@ -32,7 +34,6 @@ func (s *BankApiServer) MyHandler(w http.ResponseWriter, req *http.Request) {
 func (s *BankApiServer) AddHandleFunc(urlPattern string, configIds []string, configPaths []string) {
 	for i := 0; i < len(configIds); i++ {
 		for j := 0; j < len(configPaths); j++ {
-			// fmt.Println(urlPattern + configIds[i] + configPaths[j])
 			s.mux.HandleFunc(urlPattern + configIds[i] + configPaths[j], s.MyHandler)
 		}
 	}
@@ -53,7 +54,7 @@ func (s *BankApiServer) StartListening() {
 	})
  
 	httpServer := &http.Server {
-		Addr:           "127.0.0.1:8080",
+		Addr:           "127.0.0.1:8081",
 		Handler:        s.mux,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
