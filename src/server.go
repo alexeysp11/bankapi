@@ -29,9 +29,12 @@ func (s *BankApiServer) MyHandler(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, result)
 }
 
-func (s *BankApiServer) AddHandleFunc(urlPattern string, configStrings []string) {
-	for i := 0; i < len(configStrings); i++ {
-		s.mux.HandleFunc(urlPattern + configStrings[i], s.MyHandler)
+func (s *BankApiServer) AddHandleFunc(urlPattern string, configIds []string, configPaths []string) {
+	for i := 0; i < len(configIds); i++ {
+		for j := 0; j < len(configPaths); j++ {
+			// fmt.Println(urlPattern + configIds[i] + configPaths[j])
+			s.mux.HandleFunc(urlPattern + configIds[i] + configPaths[j], s.MyHandler)
+		}
 	}
 }
 
@@ -41,8 +44,8 @@ func (s *BankApiServer) StartListening() {
 
 	// assign a routes to a handler 
 	s.config = getConfig("server.json")
-	s.AddHandleFunc("/banking/atm/", s.config.Atm)
-	s.AddHandleFunc("/banking/eftpos/", s.config.Eftpos)
+	s.AddHandleFunc("/banking/atm/", s.config.Atm, s.config.HttpPathsAtm)
+	s.AddHandleFunc("/banking/eftpos/", s.config.Eftpos, s.config.HttpPathsEftpos)
  
 	// assign a route to an anonymous func
 	s.mux.HandleFunc("/banking/notes", func(w http.ResponseWriter, req *http.Request) {

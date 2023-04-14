@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-    lUrl := "http://127.0.0.1:8080/banking/atm/v1"
+    lUrl := "http://localhost:8080/banking/atm/v1/pin/enter/"
     fmt.Println("URL:>", lUrl)
 
     // resp, err := http.Get(lUrl)

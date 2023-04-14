@@ -8,6 +8,10 @@ import (
 type Configuration struct {
     Atm 	[]string
     Eftpos 	[]string
+
+    HttpPathsAtm 	[]string
+    HttpPathsEftpos []string
+
 	BankCoreAddress string 
 }
 
