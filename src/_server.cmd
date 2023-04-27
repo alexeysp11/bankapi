@@ -1,1 +1,0 @@
-go run main.go server.go client.go confighelper.go 

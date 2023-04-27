@@ -44,7 +44,7 @@ func (s *BankApiServer) StartListening() {
 	s.mux = http.NewServeMux()
 
 	// assign a routes to a handler 
-	s.config = getConfig("server.json")
+	s.config = getConfig("configs/appsettings.json")
 	s.AddHandleFunc("/banking/atm/", s.config.Atm, s.config.HttpPathsAtm)
 	s.AddHandleFunc("/banking/eftpos/", s.config.Eftpos, s.config.HttpPathsEftpos)
  
