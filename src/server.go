@@ -17,14 +17,14 @@ type BankApiServer struct {
 func (s *BankApiServer) MyHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("request Headers:", req.Header)
     body, _ := ioutil.ReadAll(req.Body)
-    // fmt.Println("request URL:", string(req.URL.Path))
     fmt.Println("request Body:", string(body))
+    // fmt.Println("request URL:", string(req.URL.Path))
 	// fmt.Println("request param:", req.FormValue("id"))
 
 	// parse request 
 
 	// send request to the core 
-	sendToCoreServer(req.URL.Path, string(body))
+	sendToCoreServer(s.config.BankCoreAddress + req.URL.Path, string(body))
 	fmt.Println("BankCoreAddress:", s.config.BankCoreAddress)
 	result := "Hello, world!\n" 
 
@@ -52,12 +52,12 @@ func (s *BankApiServer) StartListening() {
 	s.mux.HandleFunc("/banking/notes", func(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte("Some notes..."))
 	})
- 
+
 	httpServer := &http.Server {
-		Addr:           "127.0.0.1:8081",
+		Addr:           s.config.ServerHost + ":" + s.config.ServerPort,
 		Handler:        s.mux,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
+		ReadTimeout:    s.config.ServerReadTimeout * time.Second,
+		WriteTimeout:   s.config.ServerWriteTimeout * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
  

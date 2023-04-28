@@ -8,8 +8,7 @@ import (
 )
 
 func sendToCoreServer(urlPath string, urlValues string) {
-    lUrl := "http://localhost:8080" + urlPath
-    fmt.Println("URL:>", lUrl)
+    fmt.Println("URL:>", urlPath)
     fmt.Println("urlValues:", urlValues)
 
     s := napping.Session{}
@@ -22,7 +21,7 @@ func sendToCoreServer(urlPath string, urlValues string) {
     if err != nil {
         fmt.Println(err)
     }
-    resp, err := s.Post(lUrl, &data, nil, nil)
+    resp, err := s.Post(urlPath, &data, nil, nil)
 	if err != nil {
 		panic(err)
 	}

@@ -3,16 +3,24 @@ package main
 import (
     "encoding/json"
     "os"
+    "time"
 )
 
 type Configuration struct {
+	Environment string 
+
+	ServerHost string 
+	ServerPort string 
+	ServerReadTimeout time.Duration 
+	ServerWriteTimeout time.Duration 
+
+	BankCoreAddress string 
+
     Atm 	[]string
     Eftpos 	[]string
 
     HttpPathsAtm 	[]string
     HttpPathsEftpos []string
-
-	BankCoreAddress string 
 }
 
 func getConfig(aFilename string) Configuration {
