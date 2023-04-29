@@ -7,15 +7,15 @@ import (
     "github.com/jmcvetta/napping"
 )
 
-func sendToCoreServer(urlPath string, urlValues string) {
+func sendToCoreServer(urlPath string, urlValues string) string {
     fmt.Println("URL:>", urlPath)
     fmt.Println("urlValues:", urlValues)
 
     s := napping.Session{}
     h := &http.Header{}
-    h.Set("X-Custom-Header", "myvalue")
+    h.Set("X-Custom-Header", "bankapi-header")
     s.Header = h
-    var jsonStr = []byte("{ \"bankapi\": \"" + urlValues + "\" }")
+    var jsonStr = []byte(urlValues)
     var data map[string]json.RawMessage
     err := json.Unmarshal(jsonStr, &data)
     if err != nil {
@@ -25,7 +25,5 @@ func sendToCoreServer(urlPath string, urlValues string) {
 	if err != nil {
 		panic(err)
 	}
-    
-	fmt.Println("response Status:", resp.Status)
-    fmt.Println("response Headers:", resp.Header)
+    return resp.RawText()
 }

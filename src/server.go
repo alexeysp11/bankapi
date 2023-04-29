@@ -24,9 +24,7 @@ func (s *BankApiServer) MyHandler(w http.ResponseWriter, req *http.Request) {
 	// parse request 
 
 	// send request to the core 
-	sendToCoreServer(s.config.BankCoreAddress + req.URL.Path, string(body))
-	fmt.Println("BankCoreAddress:", s.config.BankCoreAddress)
-	result := "Hello, world!\n" 
+	result := sendToCoreServer(s.config.BankCoreAddress + req.URL.Path, string(body))
 
 	io.WriteString(w, result)
 }
