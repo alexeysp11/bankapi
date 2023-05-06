@@ -8,6 +8,6 @@ import (
 func main() {
 	fmt.Println(strings.ToUpper("Start the server\n"))
 
-	server := new(BankApiServer)
+	server := new(BankApiHttpServer)
 	server.StartListening()
 }

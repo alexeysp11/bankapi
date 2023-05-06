@@ -9,12 +9,12 @@ import (
 	"fmt"
 )
 
-type BankApiServer struct {
+type BankApiHttpServer struct {
 	mux *http.ServeMux
 	config Configuration
 }
 
-func (s *BankApiServer) MyHandler(w http.ResponseWriter, req *http.Request) {
+func (s *BankApiHttpServer) MyHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("request Headers:", req.Header)
     body, _ := ioutil.ReadAll(req.Body)
     fmt.Println("request Body:", string(body))
@@ -29,7 +29,7 @@ func (s *BankApiServer) MyHandler(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, result)
 }
 
-func (s *BankApiServer) AddHandleFunc(urlPattern string, configIds []string, configPaths []string) {
+func (s *BankApiHttpServer) AddHandleFunc(urlPattern string, configIds []string, configPaths []string) {
 	for i := 0; i < len(configIds); i++ {
 		for j := 0; j < len(configPaths); j++ {
 			s.mux.HandleFunc(urlPattern + configIds[i] + configPaths[j], s.MyHandler)
@@ -37,7 +37,7 @@ func (s *BankApiServer) AddHandleFunc(urlPattern string, configIds []string, con
 	}
 }
 
-func (s *BankApiServer) StartListening() {
+func (s *BankApiHttpServer) StartListening() {
 	// define a serveMux to handle routes
 	s.mux = http.NewServeMux()
 
