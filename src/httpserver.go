@@ -14,7 +14,7 @@ type BankApiHttpServer struct {
 	config Configuration
 }
 
-func (s *BankApiHttpServer) MyHandler(w http.ResponseWriter, req *http.Request) {
+func (s *BankApiHttpServer) HandleRequest(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("request Headers:", req.Header)
     body, _ := ioutil.ReadAll(req.Body)
     fmt.Println("request Body:", string(body))
@@ -32,7 +32,7 @@ func (s *BankApiHttpServer) MyHandler(w http.ResponseWriter, req *http.Request) 
 func (s *BankApiHttpServer) AddHandleFunc(urlPattern string, configIds []string, configPaths []string) {
 	for i := 0; i < len(configIds); i++ {
 		for j := 0; j < len(configPaths); j++ {
-			s.mux.HandleFunc(urlPattern + configIds[i] + configPaths[j], s.MyHandler)
+			s.mux.HandleFunc(urlPattern + configIds[i] + configPaths[j], s.HandleRequest)
 		}
 	}
 }
